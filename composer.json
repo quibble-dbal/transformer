@@ -1,0 +1,29 @@
+{
+    "name": "quibble/transformer",
+    "description": "Transformers for query result( set)s",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Marijn Ophorst",
+            "email": "marijn@monomelodies.nl"
+        }
+    ],
+    "require": {
+        "php": ">=7",
+        "monomelodies/reflex": "^0.1.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Quibble\\Transformer\\": "./src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Quibble\\Tests\\": "./tests"
+        }
+    },
+    "require-dev": {
+        "gentry/gentry": "^0.10.2"
+    }
+}
