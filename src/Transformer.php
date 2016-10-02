@@ -4,6 +4,7 @@ namespace Quibble\Transformer;
 
 use Monomelodies\Reflex\AnyCallable;
 use ReflectionFunctionAbstract;
+use Throwable;
 
 class Transformer
 {
@@ -35,11 +36,11 @@ class Transformer
             [AnyCallable::class, 'reflect'],
             $transformers
         );
-        $last = count($transformers);
+        $returnType = 'array';
         $transformers = array_map(
-            function ($transformer) {
-                if (!($transformer instanceof ReflectionFunctionAbstract)) {
-                    $transformer = AnyCallable::reflect($transformer);
+            function ($transformer) use (&$returnType) {
+                if ($transformer->hasReturnType()) {
+                    $returnType = $transformer->getReturnType()->__toString();
                 }
                 return $transformer;
             },
@@ -51,11 +52,6 @@ class Transformer
                 $name = $parameter->getName();
                 if (!isset($transforms[$name])) {
                     $transforms[$name] = [];
-                }
-                if (!$parameter->isOptional()) {
-                    $transforms[$name][] = function ($value) {
-                        return "$value";
-                    };
                 }
                 $type = $parameter->getType();
                 if ($type->isBuiltin()) {
@@ -71,7 +67,8 @@ class Transformer
                 }
             }
         }
-        return array_map(function ($resource) use ($transforms) {
+
+        $collection = array_map(function ($resource) use ($transforms, $returnType) {
             if ($this->stripNumericIndices) {
                 $resource = array_filter(
                     $resource,
@@ -89,8 +86,31 @@ class Transformer
                     $resource[$name] = $transform($resource[$name]);
                 }
             }
+            if (strtolower($returnType) == 'stdclass') {
+                $resource = (object)$resource;
+            } elseif (strtolower($returnType) == 'array') {
+                $resource = (array)$resource;
+            } elseif (class_exists($returnType)) {
+                $data = $resource;
+                $resource = new $returnType;
+                foreach ($data as $key => $value) {
+                    $resource->$key = $value;
+                }
+            }
             return $resource;
         }, $collection);
+
+        $collection = array_map(function ($resource) use ($transformers) {
+            array_map(function ($transformer) use (&$resource) {
+                try {
+                    AnyCallable::invokeWithArguments($transformer, $resource);
+                } catch (Throwable $e) {
+                }
+            }, $transformers);
+            return $resource;
+        }, $collection);
+
+        return $collection;
     }
 
     public function resource(array $resource, ...$transformers)
