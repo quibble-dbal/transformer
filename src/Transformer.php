@@ -62,7 +62,11 @@ class Transformer
                 } elseif (class_exists($type->__toString())) {
                     $transforms[$name][] = function ($value) use ($type) {
                         $class = $type->__toString();
-                        return new $class($value);
+                        try {
+                            return new $class($value);
+                        } catch (Throwable $e) {
+                            return $value;
+                        }
                     };
                 }
             }
