@@ -11,7 +11,7 @@
     ],
     "require": {
         "php": ">=7",
-        "monomelodies/reflex": "^0.1.1"
+        "monomelodies/reflex": "^0.2.0"
     },
     "autoload": {
         "psr-4": {
@@ -24,6 +24,7 @@
         }
     },
     "require-dev": {
-        "gentry/gentry": "^0.10.2"
+        "gentry/gentry": "^0.12.3",
+        "toast/unit": "^1.3"
     }
 }
