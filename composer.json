@@ -10,8 +10,7 @@
         }
     ],
     "require": {
-        "php": ">=7",
-        "monomelodies/reflex": "^0.2.0"
+        "php": ">=7"
     },
     "autoload": {
         "psr-4": {
