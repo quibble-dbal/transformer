@@ -12,10 +12,10 @@ class AnyCallable
     /**
      * Get a reflection for any callable.
      *
-     * @param callable $callable Anything callable.
+     * @param mixed $callable Anything callable.
      * @return ReflectionFunctionAbstract
      */
-    public static function reflect(callable $callable) : ReflectionFunctionAbstract
+    public static function reflect($callable) : ReflectionFunctionAbstract
     {
         if (is_array($callable) && isset($callable[0], $callable[1])) {
             return new ReflectionMethod($callable[0], $callable[1]);
