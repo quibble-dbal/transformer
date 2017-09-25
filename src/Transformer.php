@@ -2,7 +2,6 @@
 
 namespace Quibble\Transformer;
 
-use Monomelodies\Reflex\AnyCallable;
 use ReflectionFunctionAbstract;
 use Throwable;
 
