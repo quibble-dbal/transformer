@@ -30,8 +30,14 @@ class AnyCallable
         $args = [];
         foreach ($transformer->getParameters() as $param) {
             $name = $param->getName();
-            if (property_exists($object, $name)) {
-                $args[] =& $object->$name;
+            if (is_object($object)) {
+                if (property_exists($object, $name)) {
+                    $args[] =& $object->$name;
+                }
+            } elseif (is_array($object)) {
+                if (array_key_exists($name, $object)) {
+                    $args[] =& $object[$name];
+                }
             }
         }
         $transformer->invoke(...$args);
