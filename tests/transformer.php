@@ -49,7 +49,7 @@ return function () : Generator {
         $result = $transformer->resource(
             $result,
             function (int &$foo, stdClass &$bar, int $fizz) : stdClass {
-                echo 'transofmring';
+                echo 'transforming';
                 $foo++;
                 $bar = (array) $bar;
                 $fizz++;
