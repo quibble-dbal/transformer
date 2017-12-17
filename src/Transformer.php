@@ -117,7 +117,14 @@ class Transformer
         return $collection;
     }
 
-    public function resource(array $resource, ...$transformers) : array
+    /**
+     * Transforms a single resource.
+     *
+     * @param array $resource
+     * @param ...$transformers
+     * @return mixed
+     */
+    public function resource(array $resource, ...$transformers)
     {
         return $this->collection([$resource], ...$transformers)[0];
     }
