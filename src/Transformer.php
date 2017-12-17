@@ -13,7 +13,8 @@ class Transformer
     private $stripNumericIndices;
 
     /**
-     * @param bool $stripNumericIndices
+     * @param bool $stripNumericIndices Strip numeric indexes on resources
+     *  (e.g., for when something is passed w/o PDO::FETCH_ASSOC).
      */
     public function __construct(bool $stripNumericIndices = true)
     {
@@ -26,7 +27,7 @@ class Transformer
      * @return array
      * @throws DomainException if any transformer is not callable.
      */
-    public function collection(array $collection, ...$transformers)
+    public function collection(array $collection, ...$transformers) : array
     {
         if (!$collection) {
             return [];
@@ -116,7 +117,7 @@ class Transformer
         return $collection;
     }
 
-    public function resource(array $resource, ...$transformers)
+    public function resource(array $resource, ...$transformers) : array
     {
         return $this->collection([$resource], ...$transformers)[0];
     }
