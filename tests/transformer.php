@@ -49,14 +49,12 @@ return function () : Generator {
         $result = $transformer->resource(
             $result,
             function (int &$foo, stdClass &$bar, int $fizz) : stdClass {
-                echo 'transforming';
                 $foo++;
                 $bar = (array) $bar;
                 $fizz++;
                 return new stdClass;
             }
         );
-        var_dump($result);
         assert($result->foo === 2);
         assert(gettype($result->bar) === 'array');
         assert($result->fizz === 3);
