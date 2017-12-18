@@ -40,7 +40,7 @@ class AnyCallable
                 }
             }
         }
-        $transformer->invoke(...$args);
+        $transformer->invokeArgs($args);
     }
 }
 
