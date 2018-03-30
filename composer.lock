@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "c077cca65f5b5b8241bfc2c1cfc8a3c9",
+    "content-hash": "a958029628b4d98b9c882f49cd4b5ce7",
     "packages": [
         {
             "name": "monomelodies/reflex",
@@ -348,6 +348,47 @@
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
             "time": "2018-02-19T20:08:53+00:00"
+        },
+        {
+            "name": "toast/unit",
+            "version": "1.3.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/toast-php/unit.git",
+                "reference": "4d9076bcb36a90ecc53b4a750a9f929c10194510"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/toast-php/unit/zipball/4d9076bcb36a90ecc53b4a750a9f929c10194510",
+                "reference": "4d9076bcb36a90ecc53b4a750a9f929c10194510",
+                "shasum": ""
+            },
+            "require": {
+                "monomelodies/kingconf": "^1.1.0",
+                "php": ">=7",
+                "simoneast/simple-ansi-colors": "^1.0"
+            },
+            "bin": [
+                "bin/toast"
+            ],
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Toast\\Unit\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Marijn Ophorst",
+                    "email": "marijn@monomelodies.nl"
+                }
+            ],
+            "description": "Super-simple unit testing for PHP7",
+            "time": "2017-09-17T16:24:17+00:00"
         },
         {
             "name": "twig/twig",

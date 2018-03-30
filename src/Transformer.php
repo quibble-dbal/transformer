@@ -2,7 +2,6 @@
 
 namespace Quibble\Transformer;
 
-use Monomelodies\Reflex\AnyCallable;
 use ReflectionFunctionAbstract;
 use Throwable;
 
@@ -14,7 +13,8 @@ class Transformer
     private $stripNumericIndices;
 
     /**
-     * @param bool $stripNumericIndices
+     * @param bool $stripNumericIndices Strip numeric indexes on resources
+     *  (e.g., for when something is passed w/o PDO::FETCH_ASSOC).
      * @return void
      */
     public function __construct(bool $stripNumericIndices = true)
@@ -119,6 +119,8 @@ class Transformer
     }
 
     /**
+     * Transforms a single resource.
+     *
      * @param array $resource
      * @param ...$transformers
      * @return mixed
