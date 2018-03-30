@@ -15,6 +15,7 @@ class Transformer
 
     /**
      * @param bool $stripNumericIndices
+     * @return void
      */
     public function __construct(bool $stripNumericIndices = true)
     {
@@ -27,7 +28,7 @@ class Transformer
      * @return array
      * @throws DomainException if any transformer is not callable.
      */
-    public function collection(array $collection, ...$transformers)
+    public function collection(array $collection, ...$transformers) : array
     {
         if (!$collection) {
             return [];
@@ -117,6 +118,11 @@ class Transformer
         return $collection;
     }
 
+    /**
+     * @param array $resource
+     * @param ...$transformers
+     * @return mixed
+     */
     public function resource(array $resource, ...$transformers)
     {
         return $this->collection([$resource], ...$transformers)[0];
