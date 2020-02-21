@@ -13,6 +13,11 @@ class Transformer
     private $stripNumericIndices;
 
     /**
+     * @var bool
+     */
+    private $is74;
+
+    /**
      * @param bool $stripNumericIndices Strip numeric indexes on resources
      *  (e.g., for when something is passed w/o PDO::FETCH_ASSOC).
      * @return void
@@ -20,6 +25,7 @@ class Transformer
     public function __construct(bool $stripNumericIndices = true)
     {
         $this->stripNumericIndices = $stripNumericIndices;
+        $this->is74 = (float)phpversion() >= 7.4;
     }
 
     /**
@@ -41,7 +47,11 @@ class Transformer
         $transformers = array_map(
             function ($transformer) use (&$returnType) {
                 if ($transformer->hasReturnType()) {
-                    $returnType = $transformer->getReturnType()->__toString();
+                    if ($this->is74) {
+                        $returnType = $transformer->getReturnType()->getName();
+                    } else {
+                        $returnType = $transformer->getReturnType()->__toString();
+                    }
                 }
                 return $transformer;
             },
@@ -57,12 +67,12 @@ class Transformer
                 $type = $parameter->getType();
                 if ($type->isBuiltin()) {
                     $transforms[$name][] = function ($value) use ($type) {
-                        settype($value, $type->__toString());
+                        settype($value, $this->is74 ? $type->getName() : $type->__toString());
                         return $value;
                     };
-                } elseif (class_exists($type->__toString())) {
+                } elseif (class_exists($this->is74 ? $type->getName() : $type->__toString())) {
                     $transforms[$name][] = function ($value) use ($type) {
-                        $class = $type->__toString();
+                        $class = $this->is74 ? $type->getName() : $type->__toString();
                         try {
                             return new $class($value);
                         } catch (Throwable $e) {
