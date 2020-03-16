@@ -108,10 +108,7 @@ class Transformer
                     $resource = (array)$resource;
                 } elseif (class_exists($returnType)) {
                     $data = $resource;
-                    $resource = new $returnType;
-                    foreach ($data as $key => $value) {
-                        $resource->$key = $value;
-                    }
+                    $resource = new $returnType($data);
                 }
             } elseif (is_object($resource)) {
                 foreach ($transforms as $name => $transformers) {
